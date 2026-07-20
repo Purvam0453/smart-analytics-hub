@@ -45,6 +45,26 @@ Features:
 ### Database
 - SQLite / SQL Database
 
-
 ## 📂 Project Structure
 
+```
+AI-Resume-Screening-System
+│
+├── backend
+│   ├── Authentication
+│   ├── Resume Processing
+│   ├── APIs
+│   └── Database Models
+│
+├── frontend
+│   ├── Components
+│   ├── Pages
+│   ├── Services
+│   └── Dashboard UI
+│
+└── ml_pipeline
+    ├── Data Processing
+    ├── Model Training
+    ├── Prediction
+    └── Trained Model
+```
