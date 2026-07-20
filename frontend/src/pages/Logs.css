@@ -1,0 +1,360 @@
+.logs {
+
+    min-height:100vh;
+    padding:35px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #020617,
+        #1e293b
+    );
+
+    color:white;
+    font-family:"Segoe UI",sans-serif;
+
+}
+
+
+
+.logs h1 {
+
+    font-size:36px;
+    margin-bottom:10px;
+
+}
+
+
+
+.subtitle {
+
+    color:#cbd5e1;
+    margin-bottom:30px;
+
+}
+
+
+
+
+/* TOOL BAR */
+
+.log-tools {
+
+    display:flex;
+
+    gap:15px;
+
+    margin-bottom:30px;
+
+    flex-wrap:wrap;
+
+}
+
+
+
+.log-tools input {
+
+
+    flex:1;
+
+    min-width:250px;
+
+    padding:14px 18px;
+
+    border-radius:14px;
+
+    border:none;
+
+    outline:none;
+
+    background:
+    rgba(255,255,255,0.12);
+
+    color:white;
+
+    font-size:15px;
+
+}
+
+
+
+.log-tools input::placeholder{
+
+    color:#cbd5e1;
+
+}
+
+
+
+
+.log-tools select {
+
+
+    padding:14px 20px;
+
+    border-radius:14px;
+
+    border:none;
+
+    outline:none;
+
+    background:#1e293b;
+
+    color:white;
+
+    cursor:pointer;
+
+}
+
+
+
+
+
+.log-tools button {
+
+
+    padding:14px 22px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#38bdf8;
+
+    color:#082f49;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+}
+
+
+
+.log-tools button:hover {
+
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 10px 25px rgba(56,189,248,0.4);
+
+}
+
+
+
+
+
+/* TABLE CARD */
+
+
+.log-card {
+
+
+    background:
+    rgba(255,255,255,0.1);
+
+
+    backdrop-filter:
+    blur(15px);
+
+
+    border:
+    1px solid rgba(255,255,255,0.15);
+
+
+    padding:30px;
+
+    border-radius:22px;
+
+
+    box-shadow:
+
+    0 20px 40px rgba(0,0,0,0.25);
+
+}
+
+
+
+
+
+table {
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+
+
+
+
+th {
+
+
+    background:
+    rgba(56,189,248,0.15);
+
+
+    color:#38bdf8;
+
+
+    padding:18px;
+
+    text-align:left;
+
+}
+
+
+
+
+
+td {
+
+
+    padding:18px;
+
+    color:#e2e8f0;
+
+
+    border-bottom:
+
+    1px solid rgba(255,255,255,0.1);
+
+}
+
+
+
+
+
+tr:hover {
+
+
+    background:
+
+    rgba(255,255,255,0.08);
+
+}
+
+
+
+
+
+.score {
+
+
+    background:
+
+    rgba(56,189,248,0.2);
+
+
+    color:#7dd3fc;
+
+
+    padding:8px 16px;
+
+
+    border-radius:20px;
+
+
+    font-weight:600;
+
+}
+
+
+
+
+
+.status {
+
+
+    padding:8px 16px;
+
+
+    border-radius:20px;
+
+
+    font-weight:600;
+
+}
+
+
+
+
+
+.status.success {
+
+
+    background:
+
+    rgba(34,197,94,0.2);
+
+
+    color:#86efac;
+
+}
+
+
+
+
+
+.status.review {
+
+
+    background:
+
+    rgba(250,204,21,0.2);
+
+
+    color:#fde047;
+
+}
+
+
+
+
+
+.status.rejected {
+
+
+    background:
+
+    rgba(239,68,68,0.2);
+
+
+    color:#fca5a5;
+
+}
+
+
+
+
+
+@media(max-width:800px){
+
+
+    .logs{
+
+        padding:20px;
+
+    }
+
+
+    .log-card{
+
+        overflow-x:auto;
+
+    }
+
+
+    table{
+
+        min-width:900px;
+
+    }
+
+
+}

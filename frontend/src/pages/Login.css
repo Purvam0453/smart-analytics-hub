@@ -1,0 +1,373 @@
+
+.login-page {
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #0f172a,
+        #1e293b
+    );
+
+
+    font-family:"Segoe UI",sans-serif;
+
+
+}
+
+
+
+
+
+.login-card {
+
+
+    width:430px;
+
+
+    padding:45px;
+
+
+
+    background:
+
+    rgba(255,255,255,0.1);
+
+
+
+    backdrop-filter:
+
+    blur(20px);
+
+
+
+    border:
+
+    1px solid rgba(255,255,255,0.2);
+
+
+
+    border-radius:30px;
+
+
+
+    text-align:center;
+
+
+
+    box-shadow:
+
+    0 25px 60px rgba(0,0,0,0.4);
+
+
+
+}
+
+
+
+
+
+.logo {
+
+
+    width:100px;
+
+
+    height:100px;
+
+
+
+    margin:auto;
+
+
+
+    border-radius:50%;
+
+
+
+    display:flex;
+
+
+    justify-content:center;
+
+
+    align-items:center;
+
+
+
+    font-size:45px;
+
+
+
+    color:white;
+
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #38bdf8
+    );
+
+
+
+    box-shadow:
+
+    0 10px 30px rgba(56,189,248,0.4);
+
+
+
+}
+
+
+
+
+
+.login-card h1 {
+
+
+    margin-top:25px;
+
+
+    font-size:32px;
+
+
+    color:white;
+
+
+}
+
+
+
+
+
+.login-card p {
+
+
+    color:#cbd5e1;
+
+
+    margin-bottom:30px;
+
+
+}
+
+
+
+
+
+.input-box {
+
+
+    display:flex;
+
+
+
+    align-items:center;
+
+
+
+    gap:12px;
+
+
+
+    background:
+
+    rgba(255,255,255,0.1);
+
+
+
+    border:
+
+    1px solid rgba(255,255,255,0.15);
+
+
+
+    padding:15px;
+
+
+
+    margin:15px 0;
+
+
+
+    border-radius:15px;
+
+
+
+    color:#38bdf8;
+
+
+
+}
+
+
+
+
+
+.input-box input {
+
+
+    border:none;
+
+
+    outline:none;
+
+
+
+    background:transparent;
+
+
+
+    width:100%;
+
+
+
+    font-size:16px;
+
+
+
+    color:white;
+
+
+
+}
+
+
+
+
+
+.input-box input::placeholder{
+
+
+    color:#cbd5e1;
+
+
+}
+
+
+
+
+
+.input-box span {
+
+
+    cursor:pointer;
+
+
+    color:#38bdf8;
+
+
+}
+
+
+
+
+
+.login-btn {
+
+
+    width:100%;
+
+
+
+    padding:15px;
+
+
+
+    margin-top:20px;
+
+
+
+    border:none;
+
+
+
+    border-radius:30px;
+
+
+
+    color:white;
+
+
+
+    font-size:17px;
+
+
+
+    font-weight:700;
+
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #38bdf8
+    );
+
+
+
+    cursor:pointer;
+
+
+
+    transition:.3s;
+
+
+
+}
+
+
+
+
+
+.login-btn:hover {
+
+
+    transform:
+
+    translateY(-4px);
+
+
+
+    box-shadow:
+
+    0 10px 30px rgba(56,189,248,0.4);
+
+
+
+}
+
+
+
+
+
+.bottom-text {
+
+
+    margin-top:25px;
+
+
+
+    color:#cbd5e1;
+
+
+
+    font-size:14px;
+
+
+
+}

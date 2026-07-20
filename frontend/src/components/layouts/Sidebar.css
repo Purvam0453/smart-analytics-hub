@@ -1,0 +1,639 @@
+.sidebar {
+
+    width:260px;
+    height:100vh;
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    z-index:1000;
+
+    background:
+    linear-gradient(
+        180deg,
+        #020617,
+        #111827
+    );
+
+    color:white;
+
+    padding:25px 18px;
+
+    display:flex;
+    flex-direction:column;
+
+    border-right:1px solid rgba(255,255,255,0.08);
+
+}
+
+
+/* LOGO */
+
+.logo-section {
+
+    display:flex;
+    align-items:center;
+
+    gap:14px;
+
+    margin-bottom:50px;
+
+}
+
+
+.logo-icon {
+
+    width:55px;
+    height:55px;
+
+    border-radius:16px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #06b6d4
+    );
+
+    font-size:27px;
+
+}
+
+
+.logo-text {
+
+    font-size:23px;
+
+    font-weight:700;
+
+    color:white;
+
+    line-height:1.1;
+
+}
+
+
+.logo-text span {
+
+    color:#38bdf8;
+
+}
+
+
+
+/* MENU */
+
+.menu {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+
+.menu-item {
+
+    height:52px;
+
+    width:100%;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+
+    padding:0 18px;
+
+
+    border-radius:14px;
+
+
+    text-decoration:none;
+
+    color:#cbd5e1;
+
+
+    font-size:16px;
+
+    font-weight:500;
+
+
+    transition:0.3s;
+
+}
+
+
+
+.menu-item svg {
+
+    font-size:21px;
+
+}
+
+
+
+.menu-item:hover {
+
+
+    background:
+
+    rgba(255,255,255,0.08);
+
+
+    color:white;
+
+
+}
+
+
+
+.menu-item.active {
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #38bdf8
+    );
+
+
+    color:white;
+
+
+    box-shadow:
+
+    0 8px 25px rgba(37,99,235,.35);
+
+
+}
+
+
+
+/* LOGOUT */
+
+.logout {
+
+    margin-top:auto;
+
+}
+
+
+
+.logout button {
+
+
+    width:100%;
+
+
+    height:52px;
+
+
+    border:none;
+
+
+    border-radius:14px;
+
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:12px;
+
+
+    background:
+
+    rgba(239,68,68,.15);
+
+
+    color:#fecaca;
+
+
+    font-size:16px;
+
+
+    cursor:pointer;
+
+
+}
+
+
+
+.logout button:hover {
+
+
+    background:#ef4444;
+
+
+    color:white;
+
+
+}
+
+
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+
+.sidebar{
+
+    width:80px;
+
+}
+
+
+.logo-text{
+
+    display:none;
+
+}
+
+
+.menu-item span,
+
+.logout span{
+
+    display:none;
+
+}
+
+
+.menu-item{
+
+    justify-content:center;
+
+    padding:0;
+
+}
+
+
+}.sidebar {
+
+    width:260px;
+
+    height:100vh;
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    z-index:1000;
+
+
+    background:
+
+    linear-gradient(
+        160deg,
+        #020617,
+        #0f172a,
+        #111827
+    );
+
+
+    color:white;
+
+    padding:25px 18px;
+
+
+    display:flex;
+
+    flex-direction:column;
+
+
+    border-right:
+
+    1px solid rgba(255,255,255,0.1);
+
+
+    box-shadow:
+
+    10px 0 30px rgba(0,0,0,0.25);
+
+
+    backdrop-filter:blur(15px);
+
+}
+
+
+
+
+
+/* LOGO */
+
+.logo-section{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    margin-bottom:55px;
+
+}
+
+
+
+.logo-icon{
+
+    width:58px;
+
+    height:58px;
+
+
+    border-radius:18px;
+
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
+
+    font-size:28px;
+
+
+    box-shadow:
+
+    0 10px 25px rgba(37,99,235,.4);
+
+}
+
+
+
+
+.logo-text{
+
+    font-size:22px;
+
+    font-weight:800;
+
+    line-height:1.1;
+
+}
+
+
+
+.logo-text span{
+
+    color:#38bdf8;
+
+}
+
+
+
+/* MENU */
+
+
+.menu{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+
+
+
+.menu-item{
+
+
+    height:54px;
+
+
+    display:flex;
+
+    align-items:center;
+
+
+    gap:16px;
+
+
+    padding:0 18px;
+
+
+    border-radius:16px;
+
+
+    text-decoration:none;
+
+
+    color:#94a3b8;
+
+
+    font-size:16px;
+
+
+    transition:.3s;
+
+
+    position:relative;
+
+
+}
+
+
+
+
+
+.menu-item svg{
+
+    font-size:21px;
+
+}
+
+
+
+
+
+.menu-item:hover{
+
+
+    color:white;
+
+
+    background:
+
+    rgba(255,255,255,.08);
+
+
+    transform:translateX(5px);
+
+}
+
+
+
+
+
+.menu-item.active{
+
+
+    color:white;
+
+
+    background:
+
+
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #06b6d4
+    );
+
+
+    box-shadow:
+
+    0 10px 30px rgba(37,99,235,.35);
+
+
+}
+
+
+
+
+/* LOGOUT */
+
+
+.logout{
+
+    margin-top:auto;
+
+}
+
+
+
+.logout button{
+
+
+    width:100%;
+
+
+    height:54px;
+
+
+    border:none;
+
+
+    border-radius:16px;
+
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+
+    gap:12px;
+
+
+    cursor:pointer;
+
+
+    font-size:16px;
+
+
+    color:#fecaca;
+
+
+    background:
+
+    rgba(239,68,68,.12);
+
+
+    transition:.3s;
+
+}
+
+
+
+
+.logout button:hover{
+
+
+    background:#ef4444;
+
+
+    color:white;
+
+
+    transform:translateY(-3px);
+
+}
+
+
+
+
+
+/* MOBILE */
+
+
+@media(max-width:900px){
+
+
+.sidebar{
+
+    width:85px;
+
+}
+
+
+.logo-text{
+
+    display:none;
+
+}
+
+
+
+.menu-item span,
+
+.logout span{
+
+    display:none;
+
+}
+
+
+
+.menu-item{
+
+    justify-content:center;
+
+    padding:0;
+
+}
+
+
+}

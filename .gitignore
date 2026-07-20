@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.env
+
+# Database
+*.db
+
+# Uploads and generated files
+backend/uploads/
+*.pdf
+*.csv
+
+# VS Code
+.vscode/
+
+# Node
+node_modules/
+
+# Root node files
+/package.json
+/package-lock.json
