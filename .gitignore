@@ -9,16 +9,26 @@ venv/
 # Database
 *.db
 
-# Uploads and generated files
+# Uploads and temporary generated files
 backend/uploads/
 *.pdf
-*.csv
+backend/logs.csv
+backend/results.csv
+backend/results/
+
+# Allow dataset
+!ml_pipeline/data/UpdatedResumeDataSet.csv
+
+# Ignore large zips and duplicate nested directories
+*.zip
+Hn  techno  project/
 
 # VS Code
 .vscode/
 
 # Node
 node_modules/
+frontend/node_modules/
 
 # Root node files
 /package.json
