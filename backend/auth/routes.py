@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from pydantic import BaseModel
 
 from database import get_db
@@ -49,54 +50,55 @@ def register(
     data: RegisterSchema,
     db: Session = Depends(get_db)
 ):
+    cleaned_email = data.email.strip().lower()
+    cleaned_username = data.username.strip()
 
-
-    existing = db.query(User).filter(
-        User.email == data.email
-    ).first()
-
-
-    if existing:
-
+    if not cleaned_email or not cleaned_username or not data.password:
         raise HTTPException(
             status_code=400,
-            detail="Email already exists"
+            detail="Please provide a valid username, email, and password."
         )
 
+    # Check existing email
+    existing_email = db.query(User).filter(
+        func.lower(User.email) == cleaned_email
+    ).first()
+    if existing_email:
+        raise HTTPException(
+            status_code=400,
+            detail="This email is already registered. Please log in."
+        )
 
+    # Check existing username
+    existing_username = db.query(User).filter(
+        func.lower(User.username) == cleaned_username.lower()
+    ).first()
+    if existing_username:
+        raise HTTPException(
+            status_code=400,
+            detail="This username is already taken. Please choose a different username."
+        )
 
-    user = User(
-
-        username=data.username,
-
-        email=data.email,
-
-        password=hash_password(data.password)
-
-    )
-
-
-
-    db.add(user)
-
-    db.commit()
-
-    db.refresh(user)
-
-
+    try:
+        user = User(
+            username=cleaned_username,
+            email=cleaned_email,
+            password=hash_password(data.password)
+        )
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to create account: {str(e)}"
+        )
 
     return {
-
-        "message":"Registration Successful"
-
+        "message": "Registration Successful",
+        "username": user.username
     }
-
-
-
-
-
-
-
 
 
 @router.post("/login")
@@ -104,45 +106,22 @@ def login(
     data: LoginSchema,
     db: Session = Depends(get_db)
 ):
-
+    cleaned_email = data.email.strip().lower()
 
     user = db.query(User).filter(
-
-        User.email == data.email
-
+        func.lower(User.email) == cleaned_email
     ).first()
 
-
-
     if not user:
-
         raise HTTPException(
-
             status_code=401,
-
-            detail="Invalid Email"
-
+            detail="No account found with this email."
         )
 
-
-
-
-
-    if not verify_password(
-
-        data.password,
-
-        user.password
-
-    ):
-
-
+    if not verify_password(data.password, user.password):
         raise HTTPException(
-
             status_code=401,
-
-            detail="Invalid Password"
-
+            detail="Incorrect password. Please try again."
         )
 
 

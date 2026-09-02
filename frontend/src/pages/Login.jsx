@@ -36,7 +36,11 @@ function Login(){
       navigate("/home");
     } catch (error) {
       console.error("Login error:", error);
-      const msg = error.response?.data?.detail || "Invalid Email or Password";
+      const msg =
+        error.response?.data?.detail ||
+        (error.code === "ERR_NETWORK" || error.message?.includes("Network Error")
+          ? "Cannot connect to backend server. Please verify the backend is running on http://127.0.0.1:8000."
+          : "Invalid Email or Password");
       setErrorMessage(msg);
     } finally {
       setLoading(false);
