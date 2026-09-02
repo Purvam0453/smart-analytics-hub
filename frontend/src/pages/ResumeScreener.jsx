@@ -86,38 +86,60 @@ function ResumeScreener() {
 
     setErrorMessage("");
     setLoading(true);
-    setProgress(15);
+    setProgress(10);
     setStatusStep("Extracting text from PDF document...");
 
     const formData = new FormData();
     formData.append("file", file);
 
+    // Smooth animated progress steps
+    let currentProgress = 10;
+    const STEPS = [
+      { at: 500,  pct: 30, msg: "Parsing resume content..." },
+      { at: 1200, pct: 55, msg: "Running ML Classifier & TF-IDF Vectorization..." },
+      { at: 2000, pct: 72, msg: "Predicting career role with AI model..." },
+      { at: 3000, pct: 85, msg: "Matching against industry skill benchmarks..." },
+    ];
+    const timers = STEPS.map(({ at, pct, msg }) =>
+      setTimeout(() => {
+        setProgress(pct);
+        setStatusStep(msg);
+        currentProgress = pct;
+      }, at)
+    );
+
+    // Slow creep 85→92 while waiting for server response
+    let creepInterval = null;
+    const startCreep = setTimeout(() => {
+      creepInterval = setInterval(() => {
+        currentProgress = Math.min(currentProgress + 1, 92);
+        setProgress(currentProgress);
+      }, 600);
+    }, 3200);
+
     try {
-      const stepTimer1 = setTimeout(() => {
-        setProgress(50);
-        setStatusStep("Running ML Classifier & TF-IDF Vectorization...");
-      }, 400);
-
-      const stepTimer2 = setTimeout(() => {
-        setProgress(85);
-        setStatusStep("Matching skills against industry role benchmarks...");
-      }, 800);
-
       const response = await api.post("/resume/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      clearTimeout(stepTimer1);
-      clearTimeout(stepTimer2);
+      // Clear all timers and intervals
+      timers.forEach(clearTimeout);
+      clearTimeout(startCreep);
+      if (creepInterval) clearInterval(creepInterval);
 
       setProgress(100);
-      setStatusStep("Analysis Complete!");
+      setStatusStep("Analysis Complete! 🎉");
       setResult(response.data);
 
       if (response.data?.resume_score >= 60) {
         triggerConfetti();
       }
     } catch (error) {
+      // Clear all timers on error too
+      timers.forEach(clearTimeout);
+      clearTimeout(startCreep);
+      if (creepInterval) clearInterval(creepInterval);
+
       console.error("Resume analysis error:", error);
       const msg =
         error.response?.data?.detail ||
