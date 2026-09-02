@@ -1,123 +1,23 @@
-import { Routes, Route } from "react-router-dom";
-
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Home from "./pages/Home";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Layout from "./components/layouts/Layout";
+import ResumeScreener from "./pages/ResumeScreener";
 import Dashboard from "./pages/Dashboard";
-import Form from "./pages/Form";
-import Logs from "./pages/Logs.jsx";
-import Profile from "./pages/Profile";
-import UploadResume from "./pages/UploadResume";
+import JobMatrix from "./pages/JobMatrix";
+import Logs from "./pages/Logs";
 
-import Sidebar from "./components/layouts/Sidebar";
-
-import "./App.css";
-
-
-function Layout({ children }) {
-
+function App() {
   return (
-
-    <div className="layout">
-
-      <Sidebar />
-
-      <main className="main-content">
-        {children}
-      </main>
-
-    </div>
-
+    <Layout>
+      <Routes>
+        <Route path="/" element={<ResumeScreener />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/job-matrix" element={<JobMatrix />} />
+        <Route path="/logs" element={<Logs />} />
+        {/* Fallback route */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Layout>
   );
-
 }
-
-
-
-function App(){
-
-  return(
-
-    <Routes>
-
-
-      <Route path="/" element={<Login />} />
-
-
-      <Route path="/register" element={<Register />} />
-
-
-
-      <Route
-        path="/home"
-        element={
-          <Layout>
-            <Home />
-          </Layout>
-        }
-      />
-
-
-
-      <Route
-        path="/dashboard"
-        element={
-          <Layout>
-            <Dashboard />
-          </Layout>
-        }
-      />
-
-
-
-      <Route
-        path="/upload-resume"
-        element={
-          <Layout>
-            <UploadResume />
-          </Layout>
-        }
-      />
-
-
-
-      <Route
-        path="/form"
-        element={
-          <Layout>
-            <Form />
-          </Layout>
-        }
-      />
-
-
-
-      <Route
-        path="/logs"
-        element={
-          <Layout>
-            <Logs />
-          </Layout>
-        }
-      />
-
-
-
-      <Route
-        path="/profile"
-        element={
-          <Layout>
-            <Profile />
-          </Layout>
-        }
-      />
-
-
-    </Routes>
-
-  );
-
-}
-
 
 export default App;

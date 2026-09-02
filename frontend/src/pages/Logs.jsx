@@ -1,383 +1,178 @@
 import { useState, useEffect } from "react";
+import { History, Search, Download, RefreshCw, FileText, User, Calendar, CheckCircle2 } from "lucide-react";
 import api from "../services/api";
 import "./Logs.css";
 
 function Logs() {
-  const [logsData, setLogsData] = useState([
-    {
-      time: "10:30 AM",
-      candidate: "Rahul Sharma",
-      action: "Resume Uploaded",
-      role: "Data Engineer",
-      score: "92%",
-      status: "Shortlisted"
-    },
-    {
-      time: "10:45 AM",
-      candidate: "Amit Patel",
-      action: "AI Analysis Completed",
-      role: "Frontend Developer",
-      score: "78%",
-      status: "Review"
-    },
-    {
-      time: "11:00 AM",
-      candidate: "Neha Shah",
-      action: "Resume Prediction",
-      role: "ML Engineer",
-      score: "88%",
-      status: "Shortlisted"
-    },
-    {
-      time: "11:20 AM",
-      candidate: "Vivek Mehta",
-      action: "Resume Uploaded",
-      role: "Data Analyst",
-      score: "65%",
-      status: "Rejected"
-    }
-  ]);
-
-  useEffect(() => {
-    const fetchLogs = async () => {
-      try {
-        const res = await api.get("/logs/all");
-        if (res.data?.logs && res.data.logs.length > 0) {
-          const formatted = res.data.logs.map((l) => ({
-            time: l.date_time ? l.date_time.split(" ")[1] || l.date_time : "Recent",
-            candidate: l.username || "Guest",
-            action: l.action || "Activity",
-            role: l.details || "General",
-            score: "N/A",
-            status: "Completed"
-          }));
-          setLogsData(formatted);
-        }
-      } catch (err) {
-        console.warn("Could not fetch server logs, using default view:", err);
-      }
-    };
-    fetchLogs();
-  }, []);
-
+  const [logs, setLogs] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("All");
+  const [filterAction, setFilterAction] = useState("All");
 
-
-
-  const filteredLogs = logsData.filter((log)=>{
-
-
-    const matchSearch =
-
-      log.candidate
-      .toLowerCase()
-      .includes(search.toLowerCase())
-      ||
-      log.action
-      .toLowerCase()
-      .includes(search.toLowerCase());
-
-
-
-    const matchFilter =
-
-      filter==="All"
-      ||
-      log.status===filter;
-
-
-
-    return matchSearch && matchFilter;
-
-
-  });
-
-
-
-  const exportCSV = ()=>{
-
-
-    const csv = [
-
-      [
-        "Time",
-        "Candidate",
-        "Action",
-        "Role",
-        "Score",
-        "Status"
-      ],
-
-
-      ...logsData.map(log=>[
-
-        log.time,
-        log.candidate,
-        log.action,
-        log.role,
-        log.score,
-        log.status
-
-      ])
-
-    ]
-
-    .map(row=>row.join(","))
-    .join("\n");
-
-
-
-    const blob = new Blob([csv],{
-      type:"text/csv"
-    });
-
-
-    const url = URL.createObjectURL(blob);
-
-
-    const link = document.createElement("a");
-
-    link.href=url;
-
-    link.download="resume_logs.csv";
-
-    link.click();
-
-
+  const loadLogs = async () => {
+    try {
+      setLoading(true);
+      const res = await api.get("/logs/all");
+      if (res.data?.logs) {
+        setLogs(res.data.logs);
+      }
+    } catch (err) {
+      console.warn("Could not load backend logs:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
+  useEffect(() => {
+    loadLogs();
+  }, []);
 
+  const filteredLogs = logs.filter((log) => {
+    const matchSearch =
+      (log.username || "").toLowerCase().includes(search.toLowerCase()) ||
+      (log.action || "").toLowerCase().includes(search.toLowerCase()) ||
+      (log.details || "").toLowerCase().includes(search.toLowerCase());
 
+    const matchFilter =
+      filterAction === "All" ||
+      (log.action || "").toLowerCase().includes(filterAction.toLowerCase());
+
+    return matchSearch && matchFilter;
+  });
+
+  const exportCSV = () => {
+    if (logs.length === 0) return;
+
+    const headers = ["Timestamp", "User", "Action", "Details"];
+    const rows = logs.map((l) => [
+      `"${l.date_time || ""}"`,
+      `"${l.username || "Guest"}"`,
+      `"${l.action || ""}"`,
+      `"${(l.details || "").replace(/"/g, '""')}"`
+    ]);
+
+    const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `Screening_Audit_Logs_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
-
-
-    <div className="logs">
-
-
-      <h1>
-        Resume Screening Logs 📋
-      </h1>
-
-
-      <p className="subtitle">
-        AI generated candidate analysis history
-      </p>
-
-
-
-
-      <div className="log-tools">
-
-
-        <input
-
-          type="text"
-
-          placeholder="Search candidate or activity..."
-
-          value={search}
-
-          onChange={(e)=>setSearch(e.target.value)}
-
-        />
-
-
-
-        <select
-
-          value={filter}
-
-          onChange={(e)=>setFilter(e.target.value)}
-
-        >
-
-          <option>
-            All
-          </option>
-
-          <option>
-            Shortlisted
-          </option>
-
-          <option>
-            Review
-          </option>
-
-          <option>
-            Rejected
-          </option>
-
-
-        </select>
-
-
-
-        <button onClick={exportCSV}>
-
-          ⬇ Export CSV
-
-        </button>
-
-
-
+    <div className="logs-page">
+      <div className="logs-header-row">
+        <div>
+          <span className="badge badge-indigo">System Audit Trail</span>
+          <h1 className="logs-title">Screening Activity & Event Logs</h1>
+          <p className="logs-subtitle">
+            Chronological audit records of all resume uploads, AI predictions, and document analysis events.
+          </p>
+        </div>
+        <div className="logs-actions">
+          <button onClick={loadLogs} className="btn-secondary">
+            <RefreshCw size={15} />
+            <span>Refresh</span>
+          </button>
+          <button onClick={exportCSV} className="btn-primary" disabled={logs.length === 0}>
+            <Download size={15} />
+            <span>Export CSV</span>
+          </button>
+        </div>
       </div>
 
-
-
-
-
-
-      <div className="log-card">
-
-
-        <table>
-
-
-          <thead>
-
-            <tr>
-
-              <th>
-                Time
-              </th>
-
-              <th>
-                Candidate
-              </th>
-
-              <th>
-                Activity
-              </th>
-
-              <th>
-                Role
-              </th>
-
-              <th>
-                AI Score
-              </th>
-
-              <th>
-                Status
-              </th>
-
-
-            </tr>
-
-          </thead>
-
-
-
-
-          <tbody>
-
-
-          {
-
-            filteredLogs.map((log,index)=>(
-
-
-              <tr key={index}>
-
-
-                <td>
-                  {log.time}
-                </td>
-
-
-                <td>
-                  {log.candidate}
-                </td>
-
-
-                <td>
-                  {log.action}
-                </td>
-
-
-                <td>
-                  {log.role}
-                </td>
-
-
-
-                <td>
-
-                  <span className="score">
-
-                    {log.score}
-
-                  </span>
-
-                </td>
-
-
-
-                <td>
-
-                  <span
-
-                    className={
-
-                      log.status==="Shortlisted"
-
-                      ?
-
-                      "status success"
-
-                      :
-
-                      log.status==="Review"
-
-                      ?
-
-                      "status review"
-
-                      :
-
-                      "status rejected"
-
-                    }
-
-                  >
-
-                    {log.status}
-
-                  </span>
-
-
-                </td>
-
-
+      {/* Filter & Search Bar */}
+      <div className="logs-controls glass-panel">
+        <div className="search-input-group">
+          <Search size={18} className="search-icon" />
+          <input
+            type="text"
+            placeholder="Search by username, action, or filename..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="matrix-search-field"
+          />
+        </div>
+
+        <div className="filter-buttons-row">
+          {["All", "Upload", "Prediction"].map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilterAction(f)}
+              className={`cat-tab-btn ${filterAction === f ? "cat-tab-active" : ""}`}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Logs Table */}
+      <div className="glass-panel table-container">
+        {loading ? (
+          <div className="table-loading">
+            <RefreshCw size={24} className="animate-spin text-indigo" />
+            <span>Loading Activity Logs...</span>
+          </div>
+        ) : filteredLogs.length > 0 ? (
+          <table className="modern-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Candidate / User</th>
+                <th>Action Type</th>
+                <th>Details & Metadata</th>
+                <th>Status</th>
               </tr>
-
-
-            ))
-
-          }
-
-
-
-          </tbody>
-
-
-
-        </table>
-
-
-
+            </thead>
+            <tbody>
+              {filteredLogs.map((log, index) => (
+                <tr key={index}>
+                  <td className="cell-time">
+                    <div className="cell-flex">
+                      <Calendar size={14} className="text-muted" />
+                      <span>{log.date_time || "Recent"}</span>
+                    </div>
+                  </td>
+                  <td className="cell-user">
+                    <div className="cell-flex">
+                      <User size={14} className="text-indigo" />
+                      <span>{log.username || "Guest User"}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span
+                      className={`badge ${
+                        (log.action || "").includes("Upload")
+                          ? "badge-cyan"
+                          : "badge-emerald"
+                      }`}
+                    >
+                      {log.action || "Activity"}
+                    </span>
+                  </td>
+                  <td className="cell-details">{log.details || "-"}</td>
+                  <td>
+                    <span className="status-badge-completed">
+                      <CheckCircle2 size={13} /> Processed
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div className="table-empty-state">
+            <FileText size={36} className="text-muted" />
+            <h3>No Activity Records Found</h3>
+            <p>Upload a resume in the AI Resume Screener to generate screening activity logs.</p>
+          </div>
+        )}
       </div>
-
-
-
     </div>
-
-
   );
-
 }
-
 
 export default Logs;

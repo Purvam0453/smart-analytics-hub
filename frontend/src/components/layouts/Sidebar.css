@@ -1,639 +1,174 @@
-.sidebar {
-
-    width:260px;
-    height:100vh;
-
-    position:fixed;
-
-    left:0;
-    top:0;
-
-    z-index:1000;
-
-    background:
-    linear-gradient(
-        180deg,
-        #020617,
-        #111827
-    );
-
-    color:white;
-
-    padding:25px 18px;
-
-    display:flex;
-    flex-direction:column;
-
-    border-right:1px solid rgba(255,255,255,0.08);
-
+.app-sidebar {
+  width: var(--sidebar-width);
+  min-height: 100vh;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 50;
 }
 
-
-/* LOGO */
-
-.logo-section {
-
-    display:flex;
-    align-items:center;
-
-    gap:14px;
-
-    margin-bottom:50px;
-
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 24px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-
-.logo-icon {
-
-    width:55px;
-    height:55px;
-
-    border-radius:16px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:
-    linear-gradient(
-        135deg,
-        #2563eb,
-        #06b6d4
-    );
-
-    font-size:27px;
-
+.brand-icon-wrapper {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
 }
 
-
-.logo-text {
-
-    font-size:23px;
-
-    font-weight:700;
-
-    color:white;
-
-    line-height:1.1;
-
+.brand-text-container {
+  display: flex;
+  flex-direction: column;
 }
 
-
-.logo-text span {
-
-    color:#38bdf8;
-
+.brand-title {
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
 }
 
-
-
-/* MENU */
-
-.menu {
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:10px;
-
+.brand-subtitle {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-
-.menu-item {
-
-    height:52px;
-
-    width:100%;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:16px;
-
-
-    padding:0 18px;
-
-
-    border-radius:14px;
-
-
-    text-decoration:none;
-
-    color:#cbd5e1;
-
-
-    font-size:16px;
-
-    font-weight:500;
-
-
-    transition:0.3s;
-
+.sidebar-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  padding: 0 12px;
+  margin-bottom: 10px;
 }
 
-
-
-.menu-item svg {
-
-    font-size:21px;
-
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
 }
 
-
-
-.menu-item:hover {
-
-
-    background:
-
-    rgba(255,255,255,0.08);
-
-
-    color:white;
-
-
+.nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid transparent;
 }
 
-
-
-.menu-item.active {
-
-
-    background:
-
-    linear-gradient(
-        135deg,
-        #2563eb,
-        #38bdf8
-    );
-
-
-    color:white;
-
-
-    box-shadow:
-
-    0 8px 25px rgba(37,99,235,.35);
-
-
+.nav-link-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-
-
-/* LOGOUT */
-
-.logout {
-
-    margin-top:auto;
-
+.nav-icon {
+  color: var(--text-muted);
+  transition: color 0.2s ease;
 }
 
-
-
-.logout button {
-
-
-    width:100%;
-
-
-    height:52px;
-
-
-    border:none;
-
-
-    border-radius:14px;
-
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:12px;
-
-
-    background:
-
-    rgba(239,68,68,.15);
-
-
-    color:#fecaca;
-
-
-    font-size:16px;
-
-
-    cursor:pointer;
-
-
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.05);
 }
 
-
-
-.logout button:hover {
-
-
-    background:#ef4444;
-
-
-    color:white;
-
-
+.nav-link:hover .nav-icon {
+  color: var(--primary);
 }
 
-
-
-/* MOBILE */
-
-@media(max-width:900px){
-
-
-.sidebar{
-
-    width:80px;
-
+.nav-link-active {
+  background: rgba(99, 102, 241, 0.12) !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  border-color: rgba(99, 102, 241, 0.3) !important;
 }
 
-
-.logo-text{
-
-    display:none;
-
+.nav-link-active .nav-icon {
+  color: #818cf8 !important;
 }
 
-
-.menu-item span,
-
-.logout span{
-
-    display:none;
-
+.nav-pill-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  background: rgba(99, 102, 241, 0.2);
+  color: #c7d2fe;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-
-.menu-item{
-
-    justify-content:center;
-
-    padding:0;
-
+.sidebar-footer-card {
+  margin-top: auto;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px;
 }
 
-
-}.sidebar {
-
-    width:260px;
-
-    height:100vh;
-
-    position:fixed;
-
-    left:0;
-    top:0;
-
-    z-index:1000;
-
-
-    background:
-
-    linear-gradient(
-        160deg,
-        #020617,
-        #0f172a,
-        #111827
-    );
-
-
-    color:white;
-
-    padding:25px 18px;
-
-
-    display:flex;
-
-    flex-direction:column;
-
-
-    border-right:
-
-    1px solid rgba(255,255,255,0.1);
-
-
-    box-shadow:
-
-    10px 0 30px rgba(0,0,0,0.25);
-
-
-    backdrop-filter:blur(15px);
-
+.footer-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
 }
 
-
-
-
-
-/* LOGO */
-
-.logo-section{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:14px;
-
-    margin-bottom:55px;
-
+.text-amber {
+  color: var(--accent-amber);
 }
 
-
-
-.logo-icon{
-
-    width:58px;
-
-    height:58px;
-
-
-    border-radius:18px;
-
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-
-    background:
-
-    linear-gradient(
-        135deg,
-        #2563eb,
-        #7c3aed
-    );
-
-
-    font-size:28px;
-
-
-    box-shadow:
-
-    0 10px 25px rgba(37,99,235,.4);
-
+.footer-card-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-bottom: 10px;
 }
 
-
-
-
-.logo-text{
-
-    font-size:22px;
-
-    font-weight:800;
-
-    line-height:1.1;
-
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-emerald);
 }
 
-
-
-.logo-text span{
-
-    color:#38bdf8;
-
-}
-
-
-
-/* MENU */
-
-
-.menu{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:12px;
-
-}
-
-
-
-
-.menu-item{
-
-
-    height:54px;
-
-
-    display:flex;
-
-    align-items:center;
-
-
-    gap:16px;
-
-
-    padding:0 18px;
-
-
-    border-radius:16px;
-
-
-    text-decoration:none;
-
-
-    color:#94a3b8;
-
-
-    font-size:16px;
-
-
-    transition:.3s;
-
-
-    position:relative;
-
-
-}
-
-
-
-
-
-.menu-item svg{
-
-    font-size:21px;
-
-}
-
-
-
-
-
-.menu-item:hover{
-
-
-    color:white;
-
-
-    background:
-
-    rgba(255,255,255,.08);
-
-
-    transform:translateX(5px);
-
-}
-
-
-
-
-
-.menu-item.active{
-
-
-    color:white;
-
-
-    background:
-
-
-    linear-gradient(
-        135deg,
-        #2563eb,
-        #06b6d4
-    );
-
-
-    box-shadow:
-
-    0 10px 30px rgba(37,99,235,.35);
-
-
-}
-
-
-
-
-/* LOGOUT */
-
-
-.logout{
-
-    margin-top:auto;
-
-}
-
-
-
-.logout button{
-
-
-    width:100%;
-
-
-    height:54px;
-
-
-    border:none;
-
-
-    border-radius:16px;
-
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-
-    gap:12px;
-
-
-    cursor:pointer;
-
-
-    font-size:16px;
-
-
-    color:#fecaca;
-
-
-    background:
-
-    rgba(239,68,68,.12);
-
-
-    transition:.3s;
-
-}
-
-
-
-
-.logout button:hover{
-
-
-    background:#ef4444;
-
-
-    color:white;
-
-
-    transform:translateY(-3px);
-
-}
-
-
-
-
-
-/* MOBILE */
-
-
-@media(max-width:900px){
-
-
-.sidebar{
-
-    width:85px;
-
-}
-
-
-.logo-text{
-
-    display:none;
-
-}
-
-
-
-.menu-item span,
-
-.logout span{
-
-    display:none;
-
-}
-
-
-
-.menu-item{
-
-    justify-content:center;
-
-    padding:0;
-
-}
-
-
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-emerald);
+  box-shadow: 0 0 8px var(--accent-emerald);
+  animation: pulse-glow 2s infinite ease-in-out;
 }

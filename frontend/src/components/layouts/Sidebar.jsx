@@ -1,212 +1,98 @@
-import { NavLink, useNavigate } from "react-router-dom";
-
-import {
-  FaHome,
-  FaChartBar,
-  FaFileUpload,
-  FaHistory,
-  FaUser,
-  FaSignOutAlt,
-  FaRobot
-} from "react-icons/fa";
-
+import { NavLink } from "react-router-dom";
+import { 
+  FileScan, 
+  LayoutDashboard, 
+  Briefcase, 
+  History, 
+  Sparkles,
+  Zap,
+  Activity,
+  Layers
+} from "lucide-react";
 import "./Sidebar.css";
 
-
 function Sidebar() {
-
-
-  const navigate = useNavigate();
-
-
-
-  const logoutHandler = () => {
-
-
-    localStorage.removeItem("token");
-
-    localStorage.removeItem("user");
-
-
-    navigate("/");
-
-
-  };
-
-
-
-  const menuClass = ({isActive}) =>
-
-    isActive 
-    ? "menu-item active"
-    : "menu-item";
-
-
+  const navItems = [
+    {
+      to: "/",
+      label: "AI Resume Screener",
+      icon: FileScan,
+      badge: "Core AI",
+      end: true
+    },
+    {
+      to: "/dashboard",
+      label: "Analytics Hub",
+      icon: LayoutDashboard,
+      badge: "Live"
+    },
+    {
+      to: "/job-matrix",
+      label: "Role Benchmarks",
+      icon: Briefcase,
+    },
+    {
+      to: "/logs",
+      label: "Screening Logs",
+      icon: History,
+    }
+  ];
 
   return (
-
-
-    <aside className="sidebar">
-
-
-
-      <div className="logo-section">
-
-
-        <div className="logo-icon">
-
-          <FaRobot />
-
+    <aside className="app-sidebar">
+      {/* Brand Header */}
+      <div className="sidebar-brand">
+        <div className="brand-icon-wrapper">
+          <Sparkles className="brand-icon" size={22} />
         </div>
-
-
-
-        <div className="logo-text">
-
-          Smart
-
-          <br/>
-
-          <span>
-            Analytics Hub
-          </span>
-
-
+        <div className="brand-text-container">
+          <span className="brand-title">Smart Analytics</span>
+          <span className="brand-subtitle">AI Talent Intelligence</span>
         </div>
-
-
       </div>
 
-
-
-
-
-      <nav className="menu">
-
-
-
-        <NavLink 
-          to="/home"
-          className={menuClass}
-        >
-
-          <FaHome/>
-
-          <span>
-            Home
-          </span>
-
-
-        </NavLink>
-
-
-
-
-
-        <NavLink 
-          to="/dashboard"
-          className={menuClass}
-        >
-
-          <FaChartBar/>
-
-          <span>
-            Dashboard
-          </span>
-
-
-        </NavLink>
-
-
-
-
-
-        <NavLink 
-          to="/upload-resume"
-          className={menuClass}
-        >
-
-          <FaFileUpload/>
-
-          <span>
-            Upload Resume
-          </span>
-
-
-        </NavLink>
-
-
-
-
-
-        <NavLink 
-          to="/logs"
-          className={menuClass}
-        >
-
-          <FaHistory/>
-
-          <span>
-            Logs
-          </span>
-
-
-        </NavLink>
-
-
-
-
-
-        <NavLink 
-          to="/profile"
-          className={menuClass}
-        >
-
-          <FaUser/>
-
-          <span>
-            Profile
-          </span>
-
-
-        </NavLink>
-
-
-
+      {/* Navigation */}
+      <div className="sidebar-section-label">PLATFORM</div>
+      <nav className="sidebar-nav">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          return (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.end}
+              className={({ isActive }) =>
+                `nav-link ${isActive ? "nav-link-active" : ""}`
+              }
+            >
+              <div className="nav-link-content">
+                <Icon size={19} className="nav-icon" />
+                <span className="nav-label">{item.label}</span>
+              </div>
+              {item.badge && (
+                <span className="nav-pill-badge">{item.badge}</span>
+              )}
+            </NavLink>
+          );
+        })}
       </nav>
 
-
-
-
-
-
-      <div className="logout">
-
-
-        <button onClick={logoutHandler}>
-
-
-          <FaSignOutAlt/>
-
-
-          <span>
-            Logout
-          </span>
-
-
-        </button>
-
-
+      {/* Quick AI Info Card */}
+      <div className="sidebar-footer-card">
+        <div className="footer-card-header">
+          <Zap size={16} className="text-amber" />
+          <span>ML Engine Status</span>
+        </div>
+        <p className="footer-card-desc">
+          NLP Classifier + TF-IDF Vectorizer Active
+        </p>
+        <div className="status-indicator">
+          <span className="status-dot"></span>
+          <span>Online & Ready</span>
+        </div>
       </div>
-
-
-
     </aside>
-
-
   );
-
 }
-
 
 export default Sidebar;
