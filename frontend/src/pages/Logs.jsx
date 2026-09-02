@@ -1,55 +1,67 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import api from "../services/api";
 import "./Logs.css";
 
-
 function Logs() {
-
-
-  const logsData = [
-
+  const [logsData, setLogsData] = useState([
     {
-      time:"10:30 AM",
-      candidate:"Rahul Sharma",
-      action:"Resume Uploaded",
-      role:"Data Engineer",
-      score:"92%",
-      status:"Shortlisted"
+      time: "10:30 AM",
+      candidate: "Rahul Sharma",
+      action: "Resume Uploaded",
+      role: "Data Engineer",
+      score: "92%",
+      status: "Shortlisted"
     },
-
     {
-      time:"10:45 AM",
-      candidate:"Amit Patel",
-      action:"AI Analysis Completed",
-      role:"Frontend Developer",
-      score:"78%",
-      status:"Review"
+      time: "10:45 AM",
+      candidate: "Amit Patel",
+      action: "AI Analysis Completed",
+      role: "Frontend Developer",
+      score: "78%",
+      status: "Review"
     },
-
     {
-      time:"11:00 AM",
-      candidate:"Neha Shah",
-      action:"Resume Prediction",
-      role:"ML Engineer",
-      score:"88%",
-      status:"Shortlisted"
+      time: "11:00 AM",
+      candidate: "Neha Shah",
+      action: "Resume Prediction",
+      role: "ML Engineer",
+      score: "88%",
+      status: "Shortlisted"
     },
-
     {
-      time:"11:20 AM",
-      candidate:"Vivek Mehta",
-      action:"Resume Uploaded",
-      role:"Data Analyst",
-      score:"65%",
-      status:"Rejected"
+      time: "11:20 AM",
+      candidate: "Vivek Mehta",
+      action: "Resume Uploaded",
+      role: "Data Analyst",
+      score: "65%",
+      status: "Rejected"
     }
+  ]);
 
-  ];
+  useEffect(() => {
+    const fetchLogs = async () => {
+      try {
+        const res = await api.get("/logs/all");
+        if (res.data?.logs && res.data.logs.length > 0) {
+          const formatted = res.data.logs.map((l) => ({
+            time: l.date_time ? l.date_time.split(" ")[1] || l.date_time : "Recent",
+            candidate: l.username || "Guest",
+            action: l.action || "Activity",
+            role: l.details || "General",
+            score: "N/A",
+            status: "Completed"
+          }));
+          setLogsData(formatted);
+        }
+      } catch (err) {
+        console.warn("Could not fetch server logs, using default view:", err);
+      }
+    };
+    fetchLogs();
+  }, []);
 
-
-
-  const [search,setSearch] = useState("");
-
-  const [filter,setFilter] = useState("All");
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("All");
 
 
 

@@ -1,66 +1,38 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { registerUser } from "../services/auth";
 
 import "./Login.css";
 
-
 function Register(){
-
-  const [username,setUsername] = useState("");
-  const [email,setEmail] = useState("");
-  const [password,setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-
-
-  const handleRegister = async (e)=>{
-
+  const handleRegister = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
 
+    if (!username || !email || !password) {
+      setErrorMessage("Please fill in all registration fields.");
+      return;
+    }
 
-    try{
-
-
-      const response = await axios.post(
-
-        "http://127.0.0.1:8000/auth/register",
-
-        {
-          username: username,
-          email: email,
-          password: password
-        }
-
-      );
-
-
-      console.log(response.data);
-
-
-      alert("Registration Successful 🚀");
-
-
+    try {
+      setLoading(true);
+      await registerUser(username, email, password);
       navigate("/");
-
-
+    } catch (error) {
+      console.error("Registration error:", error);
+      const msg = error.response?.data?.detail || "Registration Failed. Please try again.";
+      setErrorMessage(msg);
+    } finally {
+      setLoading(false);
     }
-
-    catch(error){
-
-
-      console.log(
-        error.response?.data || error.message
-      );
-
-
-      alert("Registration Failed");
-
-
-    }
-
-
   };
 
 
@@ -82,7 +54,21 @@ function Register(){
           Smart Analytics Hub
         </p>
 
-
+        {errorMessage && (
+          <div
+            style={{
+              backgroundColor: "#fee2e2",
+              color: "#b91c1c",
+              padding: "10px 14px",
+              borderRadius: "8px",
+              marginBottom: "15px",
+              fontSize: "14px",
+              fontWeight: "500",
+            }}
+          >
+            ⚠️ {errorMessage}
+          </div>
+        )}
 
         <form onSubmit={handleRegister}>
 

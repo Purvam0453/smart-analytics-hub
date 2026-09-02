@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import {
   BarChart,
   Bar,
@@ -14,58 +13,38 @@ import {
   Legend,
   ResponsiveContainer
 } from "recharts";
-
+import api from "../services/api";
 import "./Dashboard.css";
 
+const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899", "#06b6d4", "#84cc16"];
 
-function Dashboard(){
+function Dashboard() {
+  const [data, setData] = useState(null);
+  const [loginData, setLoginData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        setLoading(true);
+        const [statsRes, loginRes] = await Promise.all([
+          api.get("/dashboard-stats"),
+          api.get("/login-stats")
+        ]);
 
-const [data,setData] = useState(null);
-const [loginData,setLoginData] = useState([]);
+        setData(statsRes.data);
+        setLoginData(loginRes.data?.login_trend || []);
+      } catch (err) {
+        console.error("Failed to load dashboard data:", err);
+        setError("Unable to connect to backend server.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-
-
-useEffect(()=>{
-
-
-fetch("http://127.0.0.1:8000/dashboard-stats")
-
-.then(res=>res.json())
-
-.then(result=>{
-
-setData(result);
-
-})
-
-.catch(err=>console.log(err));
-
-
-
-
-
-fetch("http://127.0.0.1:8000/login-stats")
-
-.then(res=>res.json())
-
-.then(result=>{
-
-
-setLoginData(
-
-result.login_trend || []
-
-);
-
-
-})
-
-.catch(err=>console.log(err));
-
-
-
-},[]);
+    fetchStats();
+  }, []);
 
 
 
@@ -289,15 +268,12 @@ label
 >
 
 
-{
-
-roleData.map((item,index)=>(
-
-<Cell key={index}/>
-
-))
-
-}
+                  {roleData.map((item, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
 
 
 </Pie>

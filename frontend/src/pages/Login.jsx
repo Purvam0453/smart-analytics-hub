@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { loginUser } from "../services/auth";
 
 import {
   FaUser,
@@ -12,57 +12,35 @@ import {
 
 import "./Login.css";
 
-
 function Login(){
-
-  const [showPassword,setShowPassword] = useState(false);
-
-  const [email,setEmail] = useState("");
-  const [password,setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
+  const handleLogin = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    setErrorMessage("");
 
-  const handleLogin = async()=>{
+    if (!email || !password) {
+      setErrorMessage("Please enter both email and password.");
+      return;
+    }
 
-    try{
-
-      const response = await axios.post(
-        "http://127.0.0.1:8000/auth/login",
-        {
-          email: email,
-          password: password
-        }
-      );
-
-
-      localStorage.setItem(
-        "token",
-        response.data.access_token
-      );
-
-
-      localStorage.setItem(
-        "username",
-        response.data.username
-      );
-
-
-      alert("Login Successful 🚀");
-
-
+    try {
+      setLoading(true);
+      await loginUser(email, password);
       navigate("/home");
-
-
+    } catch (error) {
+      console.error("Login error:", error);
+      const msg = error.response?.data?.detail || "Invalid Email or Password";
+      setErrorMessage(msg);
+    } finally {
+      setLoading(false);
     }
-    catch(error){
-
-      console.log(error);
-
-      alert("Invalid Email or Password");
-
-    }
-
   };
 
 
@@ -88,7 +66,21 @@ function Login(){
           AI Resume Screening & Job Prediction System
         </p>
 
-
+        {errorMessage && (
+          <div
+            style={{
+              backgroundColor: "#fee2e2",
+              color: "#b91c1c",
+              padding: "10px 14px",
+              borderRadius: "8px",
+              marginBottom: "15px",
+              fontSize: "14px",
+              fontWeight: "500",
+            }}
+          >
+            ⚠️ {errorMessage}
+          </div>
+        )}
 
         <div className="input-box">
 
