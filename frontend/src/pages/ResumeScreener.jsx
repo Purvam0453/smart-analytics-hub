@@ -14,7 +14,8 @@ import {
   Layers, 
   X,
   ArrowRight,
-  ShieldCheck
+  ShieldCheck,
+  Briefcase
 } from "lucide-react";
 import api from "../services/api";
 import "./ResumeScreener.css";
