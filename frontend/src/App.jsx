@@ -1,65 +1,73 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+
 import Layout from "./components/layouts/Layout";
-import ResumeScreener from "./pages/ResumeScreener";
+
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
 import Dashboard from "./pages/Dashboard";
+import ResumeScreener from "./pages/ResumeScreener";
 import JobMatrix from "./pages/JobMatrix";
 import Logs from "./pages/Logs";
-import Login from "./pages/Login";       // <-- adjust filename if different
-import Register from "./pages/Register"; // <-- adjust filename if different
-
-// Simple guard: checks if a token exists in localStorage after login.
-// Adjust the key name ("token") to whatever your login page actually saves.
-function ProtectedRoute({ children }) {
-  const token = localStorage.getItem("token");
-  return token ? children : <Navigate to="/login" replace />;
-}
 
 function App() {
   return (
-    <Layout>
-      <Routes>
-        {/* Public routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+    <Routes>
 
-        {/* Protected routes */}
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <ResumeScreener />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/job-matrix"
-          element={
-            <ProtectedRoute>
-              <JobMatrix />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/logs"
-          element={
-            <ProtectedRoute>
-              <Logs />
-            </ProtectedRoute>
-          }
-        />
+      {/* AUTH PAGES - NO SIDEBAR / NAVBAR */}
+      <Route path="/" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
-        {/* Fallback route */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
-    </Layout>
+      {/* MAIN APPLICATION */}
+      <Route
+        path="/home"
+        element={
+          <Layout>
+            <Dashboard />
+          </Layout>
+        }
+      />
+
+      <Route
+        path="/dashboard"
+        element={
+          <Layout>
+            <Dashboard />
+          </Layout>
+        }
+      />
+
+      <Route
+        path="/resume-screener"
+        element={
+          <Layout>
+            <ResumeScreener />
+          </Layout>
+        }
+      />
+
+      <Route
+        path="/job-matrix"
+        element={
+          <Layout>
+            <JobMatrix />
+          </Layout>
+        }
+      />
+
+      <Route
+        path="/logs"
+        element={
+          <Layout>
+            <Logs />
+          </Layout>
+        }
+      />
+
+      {/* FALLBACK */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+
+    </Routes>
   );
 }
 
