@@ -8,11 +8,13 @@ router = APIRouter(
     tags=["Logs"]
 )
 
-# Vercel serverless environment me /tmp writable hota hai
 LOG_FILE = "/tmp/logs.csv"
 
 
-# Create logs.csv automatically
+# =========================
+# CREATE LOG FILE
+# =========================
+
 if not os.path.exists(LOG_FILE):
     with open(
         LOG_FILE,
@@ -32,7 +34,7 @@ if not os.path.exists(LOG_FILE):
 
 
 # =========================
-# SAVE LOG FUNCTION
+# SAVE LOG
 # =========================
 
 def save_log(username, action, details):
@@ -50,12 +52,14 @@ def save_log(username, action, details):
             username,
             action,
             details,
-            datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            datetime.now().strftime(
+                "%Y-%m-%d %H:%M:%S"
+            )
         ])
 
 
 # =========================
-# GET ALL LOGS API
+# GET ALL LOGS
 # =========================
 
 @router.get("/all")
@@ -64,6 +68,7 @@ def get_all_logs():
     logs = []
 
     if os.path.exists(LOG_FILE):
+
         with open(
             LOG_FILE,
             "r",

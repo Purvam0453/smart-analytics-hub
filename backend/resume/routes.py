@@ -37,7 +37,7 @@ CSV_FILE = "/tmp/results.csv"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
-# Create results.csv if not exists
+# Create results.csv if it does not exist
 if not os.path.exists(CSV_FILE):
     with open(
         CSV_FILE,
@@ -45,6 +45,7 @@ if not os.path.exists(CSV_FILE):
         newline="",
         encoding="utf-8"
     ) as csv_file:
+
         writer = csv.writer(csv_file)
 
         writer.writerow([
@@ -68,7 +69,7 @@ async def upload_resume(
     current_user: dict = Depends(get_optional_current_user)
 ):
 
-    # Validate extension
+    # Validate file extension
     filename = file.filename or "resume.pdf"
 
     ext = os.path.splitext(filename)[1].lower()
