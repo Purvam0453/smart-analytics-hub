@@ -1,53 +1,16 @@
-import re
-import string
-import nltk
+"""
+Resume text preprocessing — delegates to the shared implementation
+in backend/shared_preprocessing.py so training and inference are
+always identical.  Preserves the ``clean_resume`` name for
+backward-compatibility with train_model.py / predict.py.
+"""
 
-from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
+import sys
+import os
 
-# Download NLTK resources (only first time)
-nltk.download("stopwords")
-nltk.download("wordnet")
-nltk.download("omw-1.4")
+# Ensure the backend package is importable when running from ml_pipeline/
+_backend_dir = os.path.join(os.path.dirname(__file__), "..", "..", "backend")
+if _backend_dir not in sys.path:
+    sys.path.insert(0, os.path.abspath(_backend_dir))
 
-stop_words = set(stopwords.words("english"))
-lemmatizer = WordNetLemmatizer()
-
-
-def clean_resume(text):
-    """
-    Clean resume text for ML model
-    """
-
-    if text is None:
-        return ""
-
-    text = str(text)
-
-    # Lowercase
-    text = text.lower()
-
-    # Remove URLs
-    text = re.sub(r"http\S+|www\S+", " ", text)
-
-    # Remove email IDs
-    text = re.sub(r"\S+@\S+", " ", text)
-
-    # Remove phone numbers
-    text = re.sub(r"\d{10,}", " ", text)
-
-    # Remove punctuation
-    text = text.translate(str.maketrans("", "", string.punctuation))
-
-    # Remove extra spaces
-    text = re.sub(r"\s+", " ", text).strip()
-
-    # Remove stopwords + Lemmatization
-    words = []
-
-    for word in text.split():
-
-        if word not in stop_words:
-            words.append(lemmatizer.lemmatize(word))
-
-    return " ".join(words)
+from shared_preprocessing import clean_resume_text as clean_resume  # noqa: F401

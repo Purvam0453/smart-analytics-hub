@@ -48,23 +48,35 @@ Features:
 ## 📂 Project Structure
 
 ```
-AI-Resume-Screening-System
+Smart-Analytics-Hub/
 │
 ├── backend
-│   ├── Authentication
-│   ├── Resume Processing
-│   ├── APIs
-│   └── Database Models
+│   ├── main.py                  (FastAPI entry point)
+│   ├── ai_model.py              (ML inference + skill extraction)
+│   ├── modern_role_classifier.py (Stage 2: Data Engineer / AI-ML / Data Scientist)
+│   ├── trained_model/           (model.pkl + vectorizer.pkl)
+│   ├── auth/                    (JWT authentication)
+│   ├── resume/                  (upload, analysis, report endpoints)
+│   ├── analytics/               (aggregate analytics)
+│   └── Dashboard/               (dashboard stats)
 │
 ├── frontend
-│   ├── Components
-│   ├── Pages
-│   ├── Services
-│   └── Dashboard UI
+│   ├── src/pages/               (Dashboard, Login, Register, ResumeScreener)
+│   ├── src/services/api.js      (Axios client - uses VITE_API_URL)
+│   └── vercel.json              (Vercel deployment config)
 │
-└── ml_pipeline
-    ├── Data Processing
-    ├── Model Training
-    ├── Prediction
-    └── Trained Model
+├── ml_pipeline
+│   └── trained_model/           (training pipeline + original model)
+│
+├── render.yaml                  (Render backend deployment config)
+└── DEPLOYMENT.md                (Step-by-step deployment guide)
 ```
+
+## 🚀 Deployment
+
+See **[DEPLOYMENT.md](DEPLOYMENT.md)** for complete step-by-step deployment instructions.
+
+**Quick summary:**
+- **Frontend:** Vercel (set `VITE_API_URL` to your backend URL)
+- **Backend:** Render Web Service (set `FRONTEND_URL` to your Vercel URL, `JWT_SECRET_KEY`)
+- **Database:** SQLite (included - no setup needed)

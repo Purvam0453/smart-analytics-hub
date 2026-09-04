@@ -54,8 +54,10 @@ function ResumeScreener() {
     setErrorMessage("");
     setResult(null);
 
-    if (!selectedFile.name.toLowerCase().endsWith(".pdf")) {
-      setErrorMessage("Please upload a PDF document (.pdf format only).");
+    const allowedExts = [".pdf", ".docx", ".txt"];
+    const fileExt = selectedFile.name.substring(selectedFile.name.lastIndexOf(".")).toLowerCase();
+    if (!allowedExts.includes(fileExt)) {
+      setErrorMessage("Please upload a supported document (.pdf, .docx, or .txt format).");
       setFile(null);
       return;
     }
@@ -130,6 +132,12 @@ function ResumeScreener() {
       setProgress(100);
       setStatusStep("Analysis Complete! 🎉");
       setResult(response.data);
+
+      // Set this resume as the "current candidate" so the Dashboard's
+      // current-resume analytics reflects this upload.
+      if (response.data?.id != null) {
+        localStorage.setItem("currentResumeId", String(response.data.id));
+      }
 
       if (response.data?.resume_score >= 60) {
         triggerConfetti();
@@ -221,7 +229,7 @@ function ResumeScreener() {
           <input 
             ref={fileInputRef}
             type="file" 
-            accept=".pdf" 
+            accept=".pdf,.docx,.txt" 
             style={{ display: "none" }}
             onChange={(e) => {
               if (e.target.files && e.target.files[0]) {
@@ -233,7 +241,7 @@ function ResumeScreener() {
             <UploadCloud size={32} className="dropzone-icon" />
           </div>
           <h3 className="dropzone-title">Click to browse or drag & drop resume</h3>
-          <p className="dropzone-hint">Supports PDF formats (Max 10MB) • Zero registration required</p>
+          <p className="dropzone-hint">Supports PDF, DOCX, and TXT formats (Max 10MB) • Zero registration required</p>
 
           <div className="dropzone-pills">
             <span className="badge badge-indigo">

@@ -6,15 +6,22 @@ __pycache__/
 venv/
 .env
 
-# Database
+# Database (including SQLite WAL files created by a running server)
 *.db
+*.db-shm
+*.db-wal
 
 # Uploads and temporary generated files
 backend/uploads/
+backend/reports/
+backend/logs/logs.csv
 *.pdf
 backend/logs.csv
 backend/results.csv
 backend/results/
+
+# Local Windows dev launcher (not needed for deployment)
+START_PRESENTATION.bat
 
 # Allow dataset
 !ml_pipeline/data/UpdatedResumeDataSet.csv

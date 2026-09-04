@@ -145,3 +145,87 @@
 .chart-wrapper {
   width: 100%;
 }
+
+/* Empty state (no candidate selected) */
+.dashboard-empty-state {
+  padding: 60px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.empty-state-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-indigo, #6366f1);
+  background: rgba(99, 102, 241, 0.12);
+}
+
+.dashboard-empty-state h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.dashboard-empty-state p {
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 520px;
+}
+
+/* Chart empty message */
+.chart-empty-msg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  color: #64748b;
+  font-size: 14px;
+  text-align: center;
+  padding: 0 16px;
+}
+
+/* Screening activity grid */
+.screening-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.screening-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm, 12px);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.screening-item > svg {
+  flex-shrink: 0;
+}
+
+.screening-item > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.screening-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.screening-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}

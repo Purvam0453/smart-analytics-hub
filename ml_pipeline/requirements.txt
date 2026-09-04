@@ -1,1 +1,4 @@
-dir
+pandas
+scikit-learn
+joblib
+nltk

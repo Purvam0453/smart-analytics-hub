@@ -1,0 +1,22 @@
+# Render Blueprint (optional infrastructure-as-code).
+# You can use this OR the manual Render dashboard steps in the README.
+# The manual dashboard route is recommended for the college presentation
+# because it is more reliable for the free tier.
+#
+# To use this blueprint: push to GitHub, then in Render use
+# "Blueprint" -> connect the repo. It creates the web service below.
+services:
+  - type: web
+    name: smart-analytics-hub-backend
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: FRONTEND_URL
+        sync: false
+      - key: DATABASE_URL
+        sync: false

@@ -1,0 +1,10 @@
+John Doe - Senior Python Developer
+
+EXPERIENCE
+5 years of experience in Python, Django, and FastAPI backend development. Proficient in SQL, PostgreSQL, and MongoDB databases. Built REST APIs serving millions of requests. Experience with Docker, Kubernetes, and AWS cloud deployment. Machine learning projects using scikit-learn and pandas. Strong skills in data analysis, data visualization, and ETL pipelines. Implemented CI/CD pipelines with GitHub Actions. Unit testing with pytest and Selenium automation.
+
+EDUCATION
+Bachelor of Science in Computer Science
+
+SKILLS
+Python, Java, JavaScript, SQL, HTML, CSS, React, Node.js, Django, FastAPI, Flask, PostgreSQL, MongoDB, Redis, Docker, Kubernetes, AWS, Azure, Git, Linux, Machine Learning, Deep Learning, NLP, Pandas, NumPy, Scikit-Learn, TensorFlow, PyTorch, Data Analysis, Data Visualization, Statistics, Selenium, Pytest, Jira, REST API, Microservices, PySpark, Spark, Hadoop, ETL, Tableau, Power BI, Excel

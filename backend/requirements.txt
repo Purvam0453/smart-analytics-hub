@@ -1,13 +1,18 @@
-fastapi
-uvicorn
-sqlalchemy
-python-multipart
-python-jose
+# Pinned to the exact versions verified working locally.
+# scikit-learn must be pinned: newer/older versions can change predict_proba
+# behavior and class ordering, which would alter confidence/probability output.
+fastapi==0.135.2
+uvicorn==0.42.0
+sqlalchemy==2.0.51
+python-multipart==0.0.32
+python-jose==3.5.0
 passlib==1.7.4
 bcrypt==4.0.1
-pandas
-scikit-learn
-joblib
-python-dotenv
-reportlab
-   pypdf
+pandas==2.3.3
+scikit-learn==1.9.0
+joblib==1.5.3
+python-dotenv==1.2.2
+reportlab==5.0.0
+pypdf==6.14.2
+nltk==3.10.0
+httpx==0.28.1

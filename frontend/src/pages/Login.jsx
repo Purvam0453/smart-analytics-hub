@@ -39,7 +39,7 @@ function Login(){
       const msg =
         error.response?.data?.detail ||
         (error.code === "ERR_NETWORK" || error.message?.includes("Network Error")
-          ? "Cannot connect to backend server. Please verify the backend is running on http://127.0.0.1:8000."
+          ? "Cannot connect to the backend server. Please check the backend URL and that it is running."
           : "Invalid Email or Password");
       setErrorMessage(msg);
     } finally {

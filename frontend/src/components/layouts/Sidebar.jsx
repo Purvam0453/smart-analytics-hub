@@ -4,6 +4,7 @@ import {
   LayoutDashboard, 
   Briefcase, 
   History, 
+  User,
   Sparkles,
   Zap,
   Activity,
@@ -14,11 +15,10 @@ import "./Sidebar.css";
 function Sidebar() {
   const navItems = [
     {
-      to: "/",
+      to: "/resume-screener",
       label: "AI Resume Screener",
       icon: FileScan,
       badge: "Core AI",
-      end: true
     },
     {
       to: "/dashboard",
@@ -35,6 +35,11 @@ function Sidebar() {
       to: "/logs",
       label: "Screening Logs",
       icon: History,
+    },
+    {
+      to: "/profile",
+      label: "Profile",
+      icon: User,
     }
   ];
 

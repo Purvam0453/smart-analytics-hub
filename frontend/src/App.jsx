@@ -9,6 +9,7 @@ import ResumeScreener from "./pages/ResumeScreener";
 import Dashboard from "./pages/Dashboard";
 import JobMatrix from "./pages/JobMatrix";
 import Logs from "./pages/Logs";
+import Profile from "./pages/Profile";
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -81,6 +82,17 @@ function App() {
           <ProtectedRoute>
             <Layout>
               <Logs />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <Profile />
             </Layout>
           </ProtectedRoute>
         }
